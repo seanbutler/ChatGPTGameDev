@@ -527,3 +527,32 @@ We will have to make some minor tweaks. First to add in a reference to the maths
 
 
 
+
+## Prompt 05
+
+Given the prompt...
+
+"can you please make the enemies red??"
+
+ChatGPT responded with a correct piece of code. Instead of offering an addition to the existing code it completed a new answer.
+
+
+
+![](Prompt05.png)
+
+
+The enemies have changed color! Also so has the player. In addition the choice of characters has changed. Neither of these were asked form.
+
+Take a look at the code in the Prompt05 for the complete code, its growing in lenght and there isnt much to be gained by pasting it here.
+
+[Prompt05 main.cpp](./Prompt05/main.cpp)
+
+What is interesting from my perspective is the drift that has happend. The initial code responces generatd appear to have come from one set of examples and the later from another. 
+
+In c++ coding its possible to solve the same problem in many differrent ways, in early versions of the code we had a vector for the container of enemies and obstacles, in the later version the code used an array to hold them. A similar though less flexible but faster container type.  
+
+At the stage where the code generated was as as addendum to the earlier result the generator also appears to have changed from one choice of container to the other. In successive generations (05) its settled on the array container. I doubt this was because of it being an addendum but instead because its referring to different example code to achice the requested functionality.
+
+In part I suspect this is occuring due to the similarity between the two concepts in a c++ context and the abundance of examples of introduction coding samples attempting the same thing in different ways so the ChatGPT infers they are equivalent. 
+
+English and other Natural languages have this kind of flexibility but programing languages having a more formal syntax and being interpreted by the more literal and less flexible compilers do not. These similar parts cannot be exchanged / substituted.
