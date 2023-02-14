@@ -10,8 +10,15 @@
 #include <ncurses.h>
 #include <cstdlib>
 #include <ctime>
+#include <math.h>
 
 using namespace std;
+
+
+
+int max_x = 0, max_y = 0;
+
+
 
 // Structs for game objects
 struct GameObject
@@ -52,7 +59,7 @@ bool checkCollision(int x1, int y1, int x2, int y2)
 
 
 
-void moveEnemies(Enemy enemies[], int num_enemies, int player_x, int player_y) {
+void moveEnemies(vector<Enemy>& enemies, int num_enemies, int player_x, int player_y) {
     for (int i = 0; i < num_enemies; i++) {
         // Calculate the distance between the enemy and the player
         int dist_x = player_x - enemies[i].x;
@@ -88,7 +95,6 @@ void moveEnemies(Enemy enemies[], int num_enemies, int player_x, int player_y) {
 }
 
 
-
 int main()
 {
     // Initialize ncurses
@@ -98,7 +104,6 @@ int main()
 
     // Set up game variables
     int player_x = 0, player_y = 0;
-    int max_x = 0, max_y = 0;
     int ch = 0;
 
     keypad(stdscr, TRUE);       // sb added this to make it work
@@ -136,7 +141,7 @@ int main()
         }
 
         // Draw the enemies and move them randomly
-        moveEnemies(enemies, max_x, max_y);
+        moveEnemies(enemies, 3, player_x, player_y);
         for (Enemy enemy : enemies)
         {
             mvprintw(enemy.y, enemy.x, "X");

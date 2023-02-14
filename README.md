@@ -514,7 +514,16 @@ A small but relavent number of errors have been generated and output by the comp
 ~~~
 
 
-C++ programmers will understand and be able to resolve these errors easily, one is related to an absence of the maths code necessary to calculate distances in 2d the square root. The others are lreated to the generated code itself. The code itself cant refer the limits of movement from these contexts.
+C++ programmers will understand and be able to resolve these errors easily, the 1st is related to an absence of the maths code necessary to calculate distances in 2nd the square root. The others are related to the generated code itself and about how it doesnt quite integrate with the existing code so some of the variable need to be tweaked. 
 
-We will have to make some minor tweaks. First to add in a reference to the maths code (its pretty standard in all dev environment) and Second to expand the visability of the limits of movement (the max_ variables so they can be seen at this point.) 
+The code itself cant refer the limits of movement from these contexts and its using the array of enemies in a new/different way.
+
+We will have to make some minor tweaks. First to add in a reference to the maths code (its pretty standard in all dev environment) and Second to expand the visability of the limits of movement (the max_ variables so they can be seen at this point) and Third patch up the array.
+
+
+![IMG](Prompt04.png)
+
+
+
+
 
