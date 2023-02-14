@@ -8,6 +8,8 @@
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -34,6 +36,59 @@ bool checkCollision(int x1, int y1, int x2, int y2)
     return x1 == x2 && y1 == y2;
 }
 
+// Function to move enemies randomly
+// void moveEnemies(vector<Enemy>& enemies, int max_x, int max_y)
+// {
+//     for (Enemy& enemy : enemies)
+//     {
+//         int dx = rand() % 3 - 1;
+//         int dy = rand() % 3 - 1;
+//         if (enemy.x + dx >= 0 && enemy.x + dx < max_x)
+//             enemy.x += dx;
+//         if (enemy.y + dy >= 0 && enemy.y + dy < max_y)
+//             enemy.y += dy;
+//     }
+// }
+
+
+
+void moveEnemies(Enemy enemies[], int num_enemies, int player_x, int player_y) {
+    for (int i = 0; i < num_enemies; i++) {
+        // Calculate the distance between the enemy and the player
+        int dist_x = player_x - enemies[i].x;
+        int dist_y = player_y - enemies[i].y;
+        int dist = sqrt(dist_x * dist_x + dist_y * dist_y);
+
+        // If the enemy is close to the player, move towards the player
+        if (dist < 10) {
+            int dx = (dist_x > 0) - (dist_x < 0);
+            int dy = (dist_y > 0) - (dist_y < 0);
+
+            // Check if the new position is valid
+            if (enemies[i].x + dx >= 0 && enemies[i].x + dx < max_x && 
+                enemies[i].y + dy >= 0 && enemies[i].y + dy < max_y) {
+                // Update the enemy position
+                enemies[i].x += dx;
+                enemies[i].y += dy;
+            }
+        } else {
+            // Otherwise, move randomly
+            int dx = rand() % 3 - 1;
+            int dy = rand() % 3 - 1;
+
+            // Check if the new position is valid
+            if (enemies[i].x + dx >= 0 && enemies[i].x + dx < max_x && 
+                enemies[i].y + dy >= 0 && enemies[i].y + dy < max_y) {
+                // Update the enemy position
+                enemies[i].x += dx;
+                enemies[i].y += dy;
+            }
+        }
+    }
+}
+
+
+
 int main()
 {
     // Initialize ncurses
@@ -46,9 +101,11 @@ int main()
     int max_x = 0, max_y = 0;
     int ch = 0;
 
-
     keypad(stdscr, TRUE);       // sb added this to make it work
 
+
+
+    srand(time(NULL));  // Seed the random number generator
 
     // Set up obstacles and enemies
     vector<Obstacle> obstacles = { Obstacle(5, 5), Obstacle(10, 10), Obstacle(15, 15) };
@@ -78,7 +135,8 @@ int main()
             }
         }
 
-        // Draw the enemies
+        // Draw the enemies and move them randomly
+        moveEnemies(enemies, max_x, max_y);
         for (Enemy enemy : enemies)
         {
             mvprintw(enemy.y, enemy.x, "X");
@@ -104,31 +162,33 @@ int main()
                 if (player_y < max_y - 1)
                     player_y++;
                 break;
-            case KEY_LEFT:
-                if (player_x > 0)
-                    player_x--;
-                break;
-            case KEY_RIGHT:
-                if (player_x < max_x - 1)
-                    player_x++;
-                break;
-        }
-
-        // Get screen size
-        getmaxyx(stdscr, max_y, max_x);
-
-        // Refresh the screen
-        refresh();
-
-        // Get user input
-        ch = getch();
+                
+        case KEY_LEFT:
+            if (player_x > 0)
+                player_x--;
+            break;
+        case KEY_RIGHT:
+            if (player_x < max_x - 1)
+                player_x++;
+            break;
     }
 
-    // Clean up ncurses
-    endwin();
+    // Refresh the screen
+    refresh();
 
-    return 0;
+    // Get the maximum x and y coordinates of the screen
+    getmaxyx(stdscr, max_y, max_x);
+
+    // Wait for user input or a short time delay
+    ch = getch();
+    napms(50);
 }
 
+// Clean up ncurses
+endwin();
+
+return 0;
+
+}
 
 
