@@ -22,6 +22,8 @@ int main()
     int max_x = 0, max_y = 0;
     int ch = 0;
 
+    keypad(stdscr, TRUE);       // sb added this to make it work
+
     // Get screen size
     getmaxyx(stdscr, max_y, max_x);
 
