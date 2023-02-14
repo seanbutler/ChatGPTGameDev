@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.22)
+project(ChatGPTGameDev)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_subdirectory(Prompt01)
+add_subdirectory(Prompt02)
