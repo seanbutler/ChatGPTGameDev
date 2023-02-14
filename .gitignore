@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+build
+
 # Prerequisites
 *.d
 
@@ -31,6 +32,3 @@
 *.exe
 *.out
 *.app
-=======
-build
->>>>>>> master
