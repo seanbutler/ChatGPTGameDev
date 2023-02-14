@@ -406,8 +406,24 @@ return 0;
 
 ~~~
 
+
+## discussion
+
+
+Followed by this text, which seems like it comes from some kind of explanation or tutorial.
+
+
 In this version, the `moveEnemies` function randomly moves the enemy objects on the screen. The `dx` and `dy` variables determine the direction of the movement, and are set to random values between -1 and 1. The `if` statements ensure that the enemies don't move off the screen.
 
 Note that the movement of the enemies in this version is quite simple and not very challenging. You can modify the `moveEnemies` function to make the movement more complex and interesting if you like.
+
+
+as before the line was necessary to make it read the keyboard properly plus for unknown reasons the code was missing the fina bracket which was outside the code block of the chatGPT webpage and the accompanying descriptive text was in a code block. Ho Hum.
+
+
+with the necessary changes it worked a bit more like a video game now. though it really feels like im working through the exercises from gamedev101. 
+
+![IMG](Prompt03.png)
+
 
 

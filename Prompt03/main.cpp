@@ -61,6 +61,11 @@ int main()
     int player_x = 0, player_y = 0;
     int max_x = 0, max_y = 0;
     int ch = 0;
+
+    keypad(stdscr, TRUE);       // sb added this to make it work
+
+
+
     srand(time(NULL));  // Seed the random number generator
 
     // Set up obstacles and enemies
@@ -144,3 +149,7 @@ int main()
 endwin();
 
 return 0;
+
+}
+
+
