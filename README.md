@@ -232,3 +232,182 @@ This program builds on the previous example, adding obstacles and enemies to the
 
 ( i think maybe it got a bit bored at this point as the text just stopped.)
 
+
+
+
+
+## Prompt 03
+
+## prompt 
+
+"can you make the enemies move please?"
+
+
+## result 
+
+~~~cpp
+
+#include <iostream>
+#include <vector>
+#include <ncurses.h>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+// Structs for game objects
+struct GameObject
+{
+    int x, y;
+    char symbol;
+};
+
+struct Obstacle : public GameObject
+{
+    Obstacle(int x, int y) { this->x = x; this->y = y; this->symbol = '#'; }
+};
+
+struct Enemy : public GameObject
+{
+    Enemy(int x, int y) { this->x = x; this->y = y; this->symbol = 'X'; }
+};
+
+// Function to check for collisions
+bool checkCollision(int x1, int y1, int x2, int y2)
+{
+    return x1 == x2 && y1 == y2;
+}
+
+// Function to move enemies randomly
+void moveEnemies(vector<Enemy>& enemies, int max_x, int max_y)
+{
+    for (Enemy& enemy : enemies)
+    {
+        int dx = rand() % 3 - 1;
+        int dy = rand() % 3 - 1;
+        if (enemy.x + dx >= 0 && enemy.x + dx < max_x)
+            enemy.x += dx;
+        if (enemy.y + dy >= 0 && enemy.y + dy < max_y)
+            enemy.y += dy;
+    }
+}
+
+int main()
+{
+    // Initialize ncurses
+    initscr();
+    noecho();
+    curs_set(0);
+
+    // Set up game variables
+    int player_x = 0, player_y = 0;
+    int max_x = 0, max_y = 0;
+    int ch = 0;
+    srand(time(NULL));  // Seed the random number generator
+
+    // Set up obstacles and enemies
+    vector<Obstacle> obstacles = { Obstacle(5, 5), Obstacle(10, 10), Obstacle(15, 15) };
+    vector<Enemy> enemies = { Enemy(20, 20), Enemy(25, 25), Enemy(30, 30) };
+
+    // Main game loop
+    while (ch != 'q')
+    {
+        // Clear the screen
+        clear();
+
+        // Draw the player character
+        mvprintw(player_y, player_x, "O");
+
+        // Draw the obstacles
+        for (Obstacle obstacle : obstacles)
+        {
+            mvprintw(obstacle.y, obstacle.x, "#");
+            if (checkCollision(player_x, player_y, obstacle.x, obstacle.y))
+            {
+                // Game over
+                mvprintw(max_y/2, max_x/2 - 5, "GAME OVER");
+                refresh();
+                getch();
+                endwin();
+                return 0;
+            }
+        }
+
+        // Draw the enemies and move them randomly
+        moveEnemies(enemies, max_x, max_y);
+        for (Enemy enemy : enemies)
+        {
+            mvprintw(enemy.y, enemy.x, "X");
+            if (checkCollision(player_x, player_y, enemy.x, enemy.y))
+            {
+                // Game over
+                mvprintw(max_y/2, max_x/2 - 5, "GAME OVER");
+                refresh();
+                getch();
+                endwin();
+                return 0;
+            }
+        }
+
+        // Move the player character based on user input
+        switch (ch)
+        {
+            case KEY_UP:
+                if (player_y > 0)
+                    player_y--;
+                break;
+            case KEY_DOWN:
+                if (player_y < max_y - 1)
+                    player_y++;
+                break;
+
+
+~~~
+
+
+at this point ChatGPT stopped. unsure what to do next I remembered its a chat bot, so gave a new prompt...
+
+
+"continue please"
+
+ChatGPT continued as follows...
+
+
+Here's the second half of the modified C++ program:
+
+~~~cpp
+
+        case KEY_LEFT:
+            if (player_x > 0)
+                player_x--;
+            break;
+        case KEY_RIGHT:
+            if (player_x < max_x - 1)
+                player_x++;
+            break;
+    }
+
+    // Refresh the screen
+    refresh();
+
+    // Get the maximum x and y coordinates of the screen
+    getmaxyx(stdscr, max_y, max_x);
+
+    // Wait for user input or a short time delay
+    ch = getch();
+    napms(50);
+}
+
+// Clean up ncurses
+endwin();
+
+return 0;
+
+
+~~~
+
+In this version, the `moveEnemies` function randomly moves the enemy objects on the screen. The `dx` and `dy` variables determine the direction of the movement, and are set to random values between -1 and 1. The `if` statements ensure that the enemies don't move off the screen.
+
+Note that the movement of the enemies in this version is quite simple and not very challenging. You can modify the `moveEnemies` function to make the movement more complex and interesting if you like.
+
+
