@@ -556,3 +556,16 @@ At the stage where the code generated was as as addendum to the earlier result t
 In part I suspect this is occuring due to the similarity between the two concepts in a c++ context and the abundance of examples of introduction coding samples attempting the same thing in different ways so the ChatGPT infers they are equivalent. 
 
 English and other Natural languages have this kind of flexibility but programing languages having a more formal syntax and being interpreted by the more literal and less flexible compilers do not. These similar parts cannot be exchanged / substituted.
+
+
+
+
+
+## Prompt 06
+
+Given the prompt...
+
+"can you please put the player and enemies inside a cave?" 
+
+and we are beginning to see the limits of its understanding the relationship between english and the code necessary.
+(more on ths in due course)
